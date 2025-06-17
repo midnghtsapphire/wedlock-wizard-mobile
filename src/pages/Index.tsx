@@ -15,7 +15,7 @@ const Index = () => {
       <main className="pb-6">
         {/* Hero Section */}
         <div className="px-4 py-6 text-center text-white">
-          <h2 className="text-2xl font-bold mb-2">Marriage License Fast Track</h2>
+          <h2 className="text-xl sm:text-2xl font-bold mb-2">Marriage License Fast Track</h2>
           <p className="text-blue-200 text-sm mb-6">
             Find online applications, mobile processing, and instant approval options across all 50 states
           </p>
@@ -32,18 +32,18 @@ const Index = () => {
             <h4 className="text-white font-semibold mb-3">🚀 Instant Online Applications</h4>
             <div className="space-y-2">
               <Button 
-                className="w-full bg-green-600 hover:bg-green-700 text-white"
+                className="w-full bg-green-600 hover:bg-green-700 text-white text-xs sm:text-sm py-3 px-2"
                 onClick={() => window.open("https://www.utah.gov/licensing/marriagelicense/", "_blank")}
               >
-                <CreditCard className="mr-2 h-4 w-4" />
-                Utah - Online with Credit Card (32 days validity)
+                <CreditCard className="mr-2 h-4 w-4 flex-shrink-0" />
+                <span className="truncate">Utah - Online with Credit Card (32 days validity)</span>
               </Button>
               <Button 
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm py-3 px-2"
                 onClick={() => window.open("https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Clerk-Recorder/Marriage-Licenses", "_blank")}
               >
-                <Clock className="mr-2 h-4 w-4" />
-                Colorado - Same Day Processing Available
+                <Clock className="mr-2 h-4 w-4 flex-shrink-0" />
+                <span className="truncate">Colorado - Same Day Processing Available</span>
               </Button>
             </div>
           </div>
