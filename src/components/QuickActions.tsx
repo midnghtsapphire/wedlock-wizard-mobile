@@ -7,54 +7,75 @@ import {
   Clock, 
   Download, 
   CheckSquare, 
-  Calendar 
+  Calendar,
+  CreditCard,
+  Smartphone
 } from "lucide-react";
 
 export const QuickActions = () => {
   const actions = [
     {
       icon: MapPin,
-      title: "Check State Requirements",
-      description: "Get location-specific legal requirements",
-      color: "text-blue-500"
+      title: "Find Online Applications",
+      description: "Discover states with online marriage license systems",
+      color: "text-blue-500",
+      action: () => {
+        window.open("https://www.utah.gov/licensing/marriagelicense/", "_blank");
+      }
+    },
+    {
+      icon: Smartphone,
+      title: "Mobile-Ready States",
+      description: "States offering mobile application processes",
+      color: "text-green-500",
+      action: () => {
+        // Navigate to mobile-friendly state list
+        console.log("Navigate to mobile states");
+      }
     },
     {
       icon: CheckSquare,
-      title: "Legal Checklist",
-      description: "Interactive step-by-step guide",
-      color: "text-green-500"
+      title: "Requirements Checklist",
+      description: "State-specific document requirements",
+      color: "text-orange-500",
+      action: () => {
+        console.log("Show requirements checklist");
+      }
     },
     {
       icon: FileText,
-      title: "Fill Forms",
-      description: "Auto-fill marriage license forms",
-      color: "text-orange-500"
+      title: "Application Forms",
+      description: "Download and fill marriage license forms",
+      color: "text-purple-500",
+      action: () => {
+        console.log("Show application forms");
+      }
     },
     {
-      icon: Download,
-      title: "Download PDFs",
-      description: "Get personalized documents",
-      color: "text-purple-500"
-    },
-    {
-      icon: Clock,
-      title: "Set Reminders",
-      description: "Track deadlines and filing dates",
-      color: "text-red-500"
+      icon: CreditCard,
+      title: "Fee Calculator",
+      description: "Calculate marriage license fees by location",
+      color: "text-red-500",
+      action: () => {
+        console.log("Show fee calculator");
+      }
     },
     {
       icon: Calendar,
-      title: "Wedding Timeline",
-      description: "Plan your ceremony schedule",
-      color: "text-yellow-500"
+      title: "Processing Times",
+      description: "Check application processing timeframes",
+      color: "text-yellow-500",
+      action: () => {
+        console.log("Show processing times");
+      }
     }
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-4 p-4">
+    <div className="grid grid-cols-2 gap-4">
       {actions.map((action, index) => (
-        <Card key={index} className="bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
-          <CardContent className="p-4">
+        <Card key={index} className="bg-white/5 border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
+          <CardContent className="p-4" onClick={action.action}>
             <div className="flex flex-col items-center text-center space-y-2">
               <action.icon className={`h-6 w-6 ${action.color}`} />
               <h3 className="text-sm font-semibold text-white">{action.title}</h3>

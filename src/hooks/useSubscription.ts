@@ -15,6 +15,13 @@ export interface Subscription {
   updated_at: string;
 }
 
+interface CreateSubscriptionData {
+  user_id: string;
+  email: string;
+  subscribed?: boolean;
+  subscription_tier?: string;
+}
+
 export const useSubscription = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
@@ -37,7 +44,7 @@ export const useSubscription = () => {
   });
 
   const createSubscription = useMutation({
-    mutationFn: async (subscriptionData: Partial<Subscription>) => {
+    mutationFn: async (subscriptionData: CreateSubscriptionData) => {
       const { data, error } = await supabase
         .from('subscribers')
         .insert(subscriptionData)
