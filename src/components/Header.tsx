@@ -1,54 +1,53 @@
 
-import { Menu, Bell, User, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Heart, Menu } from 'lucide-react';
+import { AuthModal } from './AuthModal';
+import { UserMenu } from './UserMenu';
+import { useAuth } from '@/contexts/AuthContext';
 
 export const Header = () => {
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const { user, loading } = useAuth();
+
   return (
-    <header className="church-gradient text-white px-4 py-3 flex items-center justify-between">
-      <div className="flex items-center space-x-3">
-        <img 
-          src="/lovable-uploads/6e603b04-857a-42d8-8249-27d0efc0c8a8.png" 
-          alt="EverUnity Church" 
-          className="w-10 h-10 rounded-full"
-        />
-        <div>
-          <h1 className="text-lg font-bold">FastMarriageLicenseBot</h1>
-          <p className="text-xs text-blue-200">by EverUnity Church</p>
-        </div>
-      </div>
-      
-      <div className="flex items-center space-x-2">
-        <Button variant="ghost" size="sm" className="text-white hover:bg-white/10">
-          <Bell className="h-4 w-4" />
-        </Button>
-        
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="text-white hover:bg-white/10">
+    <>
+      <header className="bg-church-dark/95 backdrop-blur-sm border-b border-white/10 p-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="bg-church-primary p-2 rounded-lg">
+              <Heart className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-white font-bold text-lg">FastMarriageLicenseBot</h1>
+              <p className="text-blue-200 text-xs">Powered by EverUnity Church</p>
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            {loading ? (
+              <div className="w-8 h-8 bg-gray-300 rounded-full animate-pulse" />
+            ) : user ? (
+              <UserMenu />
+            ) : (
+              <Button 
+                onClick={() => setAuthModalOpen(true)}
+                variant="secondary"
+                size="sm"
+                className="bg-white/20 hover:bg-white/30 text-white border-white/30"
+              >
+                Sign In
+              </Button>
+            )}
+            
+            <Button variant="ghost" size="sm" className="text-white">
               <Menu className="h-4 w-4" />
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem>
-              <User className="mr-2 h-4 w-4" />
-              Profile
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <MapPin className="mr-2 h-4 w-4" />
-              Wedding Planning
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Ministry Tools
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    </header>
+          </div>
+        </div>
+      </header>
+
+      <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
+    </>
   );
 };

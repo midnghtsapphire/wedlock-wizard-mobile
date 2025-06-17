@@ -26,15 +26,9 @@ export const useLegalRequirements = (state?: string) => {
     queryFn: async () => {
       console.log('Fetching legal requirements for state:', state);
       
-      let query = supabase
-        .from('legal_requirements')
-        .select('*');
-      
-      if (state) {
-        query = query.eq('state', state);
-      }
-      
-      const { data, error } = await query;
+      const { data, error } = await supabase.functions.invoke('get-legal-requirements', {
+        body: { state }
+      });
       
       if (error) {
         console.error('Error fetching legal requirements:', error);

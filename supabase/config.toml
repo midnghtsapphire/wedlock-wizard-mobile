@@ -1,1 +1,5 @@
+
 project_id = "jfdbqrsbhlfzktdvrvvz"
+
+[functions.get-legal-requirements]
+verify_jwt = false
