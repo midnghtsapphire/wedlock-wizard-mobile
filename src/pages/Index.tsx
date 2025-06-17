@@ -6,12 +6,16 @@ import { LocationDetector } from "@/components/LocationDetector";
 import { Footer } from "@/components/Footer";
 import { StateSelector } from "@/components/StateSelector";
 import { StateRequirements } from "@/components/StateRequirements";
+import { OnlineStatesModal } from "@/components/OnlineStatesModal";
+import { DownloadableFormsModal } from "@/components/DownloadableFormsModal";
 import { useState } from "react";
 import { Users, Download, Award, Star, CreditCard, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [selectedState, setSelectedState] = useState<string>("");
+  const [showOnlineStates, setShowOnlineStates] = useState(false);
+  const [showDownloadableForms, setShowDownloadableForms] = useState(false);
 
   const handleStateDetected = (stateCode: string) => {
     setSelectedState(stateCode);
@@ -74,19 +78,21 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Stats Grid */}
+        {/* Stats Grid - Now with click handlers */}
         <div className="grid grid-cols-2 gap-4 px-4 mb-6">
           <StatsCard
             icon={Users}
             value="12 States"
             label="Online Applications"
             iconColor="text-blue-400"
+            onClick={() => setShowOnlineStates(true)}
           />
           <StatsCard
             icon={Download}
             value="38 States"
             label="Downloadable Forms"
             iconColor="text-green-400"
+            onClick={() => setShowDownloadableForms(true)}
           />
           <StatsCard
             icon={Award}
@@ -140,6 +146,16 @@ const Index = () => {
       </main>
 
       <Footer />
+
+      {/* Modals */}
+      <OnlineStatesModal 
+        isOpen={showOnlineStates} 
+        onClose={() => setShowOnlineStates(false)} 
+      />
+      <DownloadableFormsModal 
+        isOpen={showDownloadableForms} 
+        onClose={() => setShowDownloadableForms(false)} 
+      />
     </div>
   );
 };
