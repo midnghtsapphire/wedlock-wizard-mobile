@@ -1,0 +1,10 @@
+
+@layer base {
+  .church-gradient {
+    background: linear-gradient(135deg, hsl(var(--church-primary)) 0%, hsl(var(--church-dark)) 100%);
+  }
+
+  .gold-accent {
+    color: hsl(var(--church-secondary));
+  }
+}
