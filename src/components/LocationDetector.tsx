@@ -1,84 +1,98 @@
 
-import { useState, useEffect } from "react";
-import { MapPin, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import React from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { MapPin, Loader2 } from 'lucide-react';
+import { useLocationDetection } from '@/hooks/useLocationDetection';
 
-export const LocationDetector = () => {
-  const [location, setLocation] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+interface LocationDetectorProps {
+  onStateDetected?: (state: string) => void;
+}
 
-  const detectLocation = async () => {
-    setIsLoading(true);
-    
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          try {
-            // In a real app, you'd reverse geocode these coordinates
-            // For demo purposes, we'll simulate detection
-            const { latitude, longitude } = position.coords;
-            console.log(`Location detected: ${latitude}, ${longitude}`);
-            
-            // Simulate API call for location name
-            setTimeout(() => {
-              setLocation("Colorado, USA");
-              setHasPermission(true);
-              setIsLoading(false);
-            }, 1500);
-          } catch (error) {
-            console.error("Error getting location name:", error);
-            setLocation("Location detection failed");
-            setIsLoading(false);
-          }
-        },
-        (error) => {
-          console.error("Geolocation error:", error);
-          setHasPermission(false);
-          setLocation("Please select your state manually");
-          setIsLoading(false);
-        }
-      );
-    } else {
-      setLocation("Geolocation not supported");
-      setIsLoading(false);
+export const LocationDetector = ({ onStateDetected }: LocationDetectorProps) => {
+  const { isLoading, location, error, detectLocation, clearLocation } = useLocationDetection();
+
+  const handleDetectLocation = async () => {
+    await detectLocation();
+    if (location && onStateDetected) {
+      // Convert state name to state code if needed
+      const stateCodeMap: { [key: string]: string } = {
+        'Colorado': 'CO',
+        'Utah': 'UT',
+        'California': 'CA',
+        'Nevada': 'NV',
+        'Texas': 'TX',
+        'Florida': 'FL',
+        'New York': 'NY',
+        // Add more as needed
+      };
+      const stateCode = stateCodeMap[location] || location;
+      onStateDetected(stateCode);
     }
   };
 
   return (
-    <Card className="bg-white/10 border-white/20 mb-6">
+    <Card className="bg-white/10 border-white/20">
       <CardContent className="p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <MapPin className="h-5 w-5 text-white" />
-            <div>
-              <p className="text-white font-medium">Wedding Location</p>
-              <p className="text-blue-200 text-sm">
-                {location || "Auto-detect your location"}
+        <h3 className="text-white font-semibold mb-3 flex items-center">
+          <MapPin className="mr-2 h-4 w-4" />
+          Auto-Detect Your Location
+        </h3>
+        
+        {!location && !error && (
+          <div className="space-y-3">
+            <p className="text-blue-200 text-sm">
+              Let us detect your location to show relevant marriage license information
+            </p>
+            <Button 
+              onClick={handleDetectLocation}
+              disabled={isLoading}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Detecting...
+                </>
+              ) : (
+                <>
+                  <MapPin className="mr-2 h-4 w-4" />
+                  Detect My Location
+                </>
+              )}
+            </Button>
+          </div>
+        )}
+
+        {location && (
+          <div className="space-y-3">
+            <div className="bg-green-600/20 border border-green-500/30 rounded-lg p-3">
+              <p className="text-green-200 text-sm font-medium">
+                📍 Detected: {location}
               </p>
             </div>
+            <Button 
+              onClick={clearLocation}
+              variant="outline"
+              className="w-full border-white/30 text-white hover:bg-white/10"
+            >
+              Detect Different Location
+            </Button>
           </div>
-          
-          <Button
-            onClick={detectLocation}
-            disabled={isLoading}
-            variant="secondary"
-            size="sm"
-            className="bg-white/20 hover:bg-white/30 text-white border-white/30"
-          >
-            {isLoading ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              "Detect"
-            )}
-          </Button>
-        </div>
-        
-        {hasPermission === false && (
-          <p className="text-yellow-300 text-xs mt-2">
-            Location permission denied. Please select your state manually below.
-          </p>
+        )}
+
+        {error && (
+          <div className="space-y-3">
+            <div className="bg-orange-600/20 border border-orange-500/30 rounded-lg p-3">
+              <p className="text-orange-200 text-sm">{error}</p>
+            </div>
+            <Button 
+              onClick={handleDetectLocation}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              Try Again
+            </Button>
+          </div>
         )}
       </CardContent>
     </Card>

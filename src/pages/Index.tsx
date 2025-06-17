@@ -4,10 +4,19 @@ import { StatsCard } from "@/components/StatsCard";
 import { QuickActions } from "@/components/QuickActions";
 import { LocationDetector } from "@/components/LocationDetector";
 import { Footer } from "@/components/Footer";
+import { StateSelector } from "@/components/StateSelector";
+import { StateRequirements } from "@/components/StateRequirements";
+import { useState } from "react";
 import { Users, Download, Award, Star, CreditCard, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
+  const [selectedState, setSelectedState] = useState<string>("");
+
+  const handleStateDetected = (stateCode: string) => {
+    setSelectedState(stateCode);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-church-primary via-church-dark to-church-primary">
       <Header />
@@ -21,9 +30,25 @@ const Index = () => {
           </p>
         </div>
 
+        {/* State Selector */}
+        <div className="px-4 mb-6">
+          <h3 className="text-white text-lg font-semibold mb-4">Select Any State</h3>
+          <StateSelector 
+            selectedState={selectedState} 
+            onStateChange={setSelectedState} 
+          />
+        </div>
+
+        {/* State Requirements Display */}
+        {selectedState && (
+          <div className="px-4 mb-6">
+            <StateRequirements stateCode={selectedState} />
+          </div>
+        )}
+
         {/* Location Detection */}
         <div className="px-4 mb-6">
-          <LocationDetector />
+          <LocationDetector onStateDetected={handleStateDetected} />
         </div>
 
         {/* Quick Online Options */}
