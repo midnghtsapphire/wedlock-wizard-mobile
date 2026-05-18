@@ -3,6 +3,7 @@ import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Download, FileText } from 'lucide-react';
+import { openWorkRequestResearch } from '@/lib/workRequestResearch';
 
 interface DownloadableFormsModalProps {
   isOpen: boolean;
@@ -20,9 +21,10 @@ const DOWNLOADABLE_STATES = [
 
 export const DownloadableFormsModal = ({ isOpen, onClose }: DownloadableFormsModalProps) => {
   const handleDownloadForm = (state: string) => {
-    // This would typically link to actual state forms
-    const searchQuery = `${state} marriage license application form filetype:pdf`;
-    window.open(`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`, '_blank');
+    openWorkRequestResearch({
+      title: `${state} marriage license application form`,
+      labels: ['downloadable forms', 'pdf', 'official source'],
+    });
   };
 
   return (

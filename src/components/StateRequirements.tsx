@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useLegalRequirements } from '@/hooks/useLegalRequirements';
 import { ExternalLink, Clock, DollarSign, Users, FileText } from 'lucide-react';
+import { openWorkRequestResearch } from '@/lib/workRequestResearch';
 
 interface StateRequirementsProps {
   stateCode: string;
@@ -101,8 +102,10 @@ export const StateRequirements = ({ stateCode }: StateRequirementsProps) => {
           <Button 
             className="w-full bg-blue-600 hover:bg-blue-700 text-white"
             onClick={() => {
-              // You could add state-specific application links here
-              window.open(`https://www.google.com/search?q=${stateReq.state}+marriage+license+application+online`, "_blank");
+              openWorkRequestResearch({
+                title: `Find ${stateReq.state} marriage license application`,
+                labels: ['state application', 'official source', stateReq.state],
+              });
             }}
           >
             <ExternalLink className="mr-2 h-4 w-4" />
