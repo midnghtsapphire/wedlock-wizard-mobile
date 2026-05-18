@@ -1,16 +1,14 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { 
   FileText, 
   MapPin, 
-  Clock, 
-  Download, 
   CheckSquare, 
   Calendar,
   CreditCard,
   Smartphone
 } from "lucide-react";
+import { openWorkRequestResearch } from "@/lib/marriageLicenseResearch";
 
 export const QuickActions = () => {
   const actions = [
@@ -20,17 +18,23 @@ export const QuickActions = () => {
       description: "Discover states with online marriage license systems",
       color: "text-blue-500",
       action: () => {
-        window.open("https://www.utah.gov/licensing/marriagelicense/", "_blank");
+        openWorkRequestResearch({
+          title: "Find online marriage license applications",
+          description: "discover official state and county application portals",
+          labels: ["online application", "official source", "marriage license"],
+        });
       }
     },
     {
       icon: Smartphone,
-      title: "Mobile-Ready States",
+      title: "Mobile-ready states",
       description: "States offering mobile application processes",
       color: "text-green-500",
       action: () => {
-        // Navigate to mobile-friendly state list
-        console.log("Navigate to mobile states");
+        openWorkRequestResearch({
+          title: "Find mobile-ready states",
+          labels: ["mobile application", "smartphone", "digital process"],
+        });
       }
     },
     {
@@ -39,7 +43,10 @@ export const QuickActions = () => {
       description: "State-specific document requirements",
       color: "text-orange-500",
       action: () => {
-        console.log("Show requirements checklist");
+        openWorkRequestResearch({
+          title: "State marriage license requirements checklist",
+          labels: ["checklist", "documents", "state requirements"],
+        });
       }
     },
     {
@@ -48,7 +55,10 @@ export const QuickActions = () => {
       description: "Download and fill marriage license forms",
       color: "text-purple-500",
       action: () => {
-        console.log("Show application forms");
+        openWorkRequestResearch({
+          title: "Marriage license application forms",
+          labels: ["downloadable forms", "pdf"],
+        });
       }
     },
     {
@@ -57,7 +67,10 @@ export const QuickActions = () => {
       description: "Calculate marriage license fees by location",
       color: "text-red-500",
       action: () => {
-        console.log("Show fee calculator");
+        openWorkRequestResearch({
+          title: "Marriage license fee by state and county",
+          labels: ["fees", "cost calculator"],
+        });
       }
     },
     {
@@ -66,7 +79,10 @@ export const QuickActions = () => {
       description: "Check application processing timeframes",
       color: "text-yellow-500",
       action: () => {
-        console.log("Show processing times");
+        openWorkRequestResearch({
+          title: "Marriage license processing times",
+          labels: ["wait time", "same day processing"],
+        });
       }
     }
   ];
