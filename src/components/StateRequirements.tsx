@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useLegalRequirements } from '@/hooks/useLegalRequirements';
 import { ExternalLink, Clock, DollarSign, Users, FileText } from 'lucide-react';
-import { openWorkRequestResearch } from '@/lib/workRequestResearch';
+import { openWorkRequestResearch } from '@/lib/marriageLicenseResearch';
 
 interface StateRequirementsProps {
   stateCode: string;

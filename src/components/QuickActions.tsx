@@ -8,7 +8,7 @@ import {
   CreditCard,
   Smartphone
 } from "lucide-react";
-import { openWorkRequestResearch } from "@/lib/workRequestResearch";
+import { openWorkRequestResearch } from "@/lib/marriageLicenseResearch";
 
 export const QuickActions = () => {
   const actions = [
@@ -27,12 +27,12 @@ export const QuickActions = () => {
     },
     {
       icon: Smartphone,
-      title: "Mobile-Ready States",
+      title: "Mobile-ready states",
       description: "States offering mobile application processes",
       color: "text-green-500",
       action: () => {
         openWorkRequestResearch({
-          title: "Mobile-Ready States",
+          title: "Find mobile-ready states",
           labels: ["mobile application", "smartphone", "digital process"],
         });
       }

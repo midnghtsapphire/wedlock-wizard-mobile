@@ -3,7 +3,7 @@ import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Download, FileText } from 'lucide-react';
-import { openWorkRequestResearch } from '@/lib/workRequestResearch';
+import { openWorkRequestResearch } from '@/lib/marriageLicenseResearch';
 
 interface DownloadableFormsModalProps {
   isOpen: boolean;
