@@ -23,7 +23,7 @@ export const buildWorkRequestQuery = (workRequest: WorkRequestInput): string => 
   ].filter((segment): segment is string => Boolean(segment));
 
   if (segments.length === 0) {
-    return "wedlock wizard marriage license requirements";
+    return "marriage license requirements";
   }
 
   return [...new Set(segments)].join(" ");

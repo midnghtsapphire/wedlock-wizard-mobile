@@ -33,6 +33,7 @@ export const QuickActions = () => {
       action: () => {
         openWorkRequestResearch({
           title: "Mobile-Ready States",
+          labels: ["mobile application", "smartphone", "digital process"],
         });
       }
     },
